@@ -307,7 +307,7 @@ public class JewishDate implements Comparable<JewishDate>, Cloneable {
 	 * @param year the Gregorian year
 	 * @return if the year in question is a leap year.
 	 */
-	boolean isGregorianLeapYear(int year) {
+	static boolean isGregorianLeapYear(int year) {
 		return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
 	}
 
@@ -344,7 +344,7 @@ public class JewishDate implements Comparable<JewishDate>, Cloneable {
 	private static int getLastDayOfGregorianMonth(int month, int year) {
 		switch (month) {
 		case 2:
-			if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)) {
+			if (isGregorianLeapYear(year)) {
 				return 29;
 			} else {
 				return 28;
