@@ -3,6 +3,7 @@ package com.kosherjava.zmanim.hebrewcalendar;
 import com.kosherjava.zmanim.util.GeoLocation;
 
 import java.util.*;
+import java.util.function.Function;
 
 public class TestHelper {
 
@@ -105,27 +106,44 @@ public class TestHelper {
         return 5763;
     }
 
-    public static Map<Integer, List<String>> allDaysMatching(int year, boolean inIsrael, boolean useModernHolidays) {
+    public static <T> Map<T, List<String>> allDaysMatching(int year, Function<JewishCalendar, T> matcher) {
+        return allDaysMatching(year, matcher, false, false);
+    }
+    public static <T> Map<T, List<String>> allDaysMatching(int year, Function<JewishCalendar, T> matcher, boolean inIsrael) {
+        return allDaysMatching(year, matcher, inIsrael, false);
+    }
+
+    public static <T> Map<T, List<String>> allDaysMatching(int year, Function<JewishCalendar, T> matcher, boolean inIsrael, boolean useModernHolidays) {
         JewishCalendar calendar = new JewishCalendar(year, 7, 1);
         calendar.setInIsrael(inIsrael);
         calendar.setUseModernHolidays(useModernHolidays);
-        Map<Integer, List<String>> collection = new HashMap<>();
+        Map<T, List<String>> collection = new HashMap<>();
         while (calendar.getJewishYear() == year) {
-            int sd = calendar.getYomTovIndex();
-            if (sd != 0) {
+            T sd = matcher.apply(calendar);
+//            System.out.println("SD: " + sd);
+            if (
+                    (sd instanceof Integer && ((Integer) sd) >= 0) ||
+                    (sd instanceof Boolean && (Boolean) sd) ||
+                            sd != null
+            ) {
+//                System.out.println("Entered if for value " + sd);
                 if (!collection.containsKey(sd)) {
                     collection.put(sd, new ArrayList<>());
                 }
-                collection.get(sd).add(calendar.getJewishMonth() + "-" + calendar.getJewishDayOfMonth());
+                List<String> strings = collection.get(sd);
+//                System.out.println("Previous values: " + strings);
+                String e = calendar.getJewishMonth() + "-" + calendar.getJewishDayOfMonth();
+//                System.out.println("Adding new value: " + e);
+                strings.add(e);
             }
             calendar.forward(Calendar.DATE, 1);
         }
         return collection;
     }
 
-    public static Map<Integer, List<String>> specificDaysMatching(Map<Integer, List<String>> collection, List<Integer> days) {
-        Map<Integer, List<String>> specificDays = new HashMap<>();
-        for (int day : days) {
+    public static <T, R> Map<T, List<R>> specificDaysMatching(Map<T, List<R>> collection, List<T> days) {
+        Map<T, List<R>> specificDays = new HashMap<>();
+        for (T day : days) {
             if (collection.containsKey(day)) {
                 specificDays.put(day, collection.get(day));
             }
@@ -134,18 +152,6 @@ public class TestHelper {
     }
 
     public static void main(String[] args) {
-        // Example usage:
-        List<GeoLocation> locations = basicLocations();
-        int year = 2023;
-        boolean inIsrael = false;
-        boolean useModernHolidays = false;
-        Map<Integer, List<String>> allDaysCollection = allDaysMatching(year,
-                inIsrael, useModernHolidays);
-        List<Integer> specificDays = new ArrayList();
-        specificDays.add(1);
-        specificDays.add(2);
-        specificDays.add(3);
-        Map<Integer, List<String>> specificDaysCollection = specificDaysMatching(allDaysCollection, specificDays);
-        System.out.println(specificDaysCollection);
+
     }
 }
