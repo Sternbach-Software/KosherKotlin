@@ -2,7 +2,6 @@ package com.kosherjava.zmanim.hebrewcalendar;
 
 import com.kosherjava.zmanim.AstronomicalCalendar;
 import com.kosherjava.zmanim.util.GeoLocation;
-import org.jetbrains.annotations.Nullable;
 import org.junit.Test;
 
 import java.time.LocalDate;
@@ -228,7 +227,7 @@ public class TestAstronomicalCalendar {
         return Math.round(number * factor) / factor;
     }
 
-    @Nullable
+    //@Nullable
     private Double getNullOrRound(double value) {
         return value == 0.0 || Double.isNaN(value) ? null : roundTo8DecimalPlaces(value);
     }
