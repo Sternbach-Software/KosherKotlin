@@ -838,7 +838,12 @@ public class JewishCalendar extends JewishDate {
 	public boolean hasCandleLighting() {
 		return isTomorrowShabbosOrYomTov();
 	}
-	
+
+	public boolean hasDelayedCandleLighting() {
+		return getDayOfWeek() != 6 && hasCandleLighting() && isAssurBemelacha();
+	}
+
+
 	/**
 	 * Returns true if tomorrow is <em>Shabbos</em> or <em>Yom Tov</em>. This will return true on <em>Erev Shabbos</em>,
 	 * <em>Erev Yom Tov</em>, the first day of <em>Rosh Hashana</em> and <em>erev</em> the first days of <em>Yom Tov</em>
@@ -864,6 +869,13 @@ public class JewishCalendar extends JewishDate {
 				&& ((getJewishMonth() == NISSAN && (getJewishDayOfMonth() == 15 || getJewishDayOfMonth() == 21))
 				|| (getJewishMonth() == TISHREI && (getJewishDayOfMonth() == 15 || getJewishDayOfMonth() == 22))
 				|| (getJewishMonth() == SIVAN && getJewishDayOfMonth() == 6 )));
+	}
+	public boolean isYomTovSheni() {
+		//return whether yesterday was erev
+		back();
+		boolean isYomTovSheini = isErevYomTovSheni();
+		forward(Calendar.DATE, 1);
+		return isYomTovSheini;
 	}
 
 	/**

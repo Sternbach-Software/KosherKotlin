@@ -5,12 +5,15 @@ import org.junit.Test;
 import static com.kosherjava.zmanim.hebrewcalendar.TestHelper.*;
 import static org.junit.Assert.*;
 
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * Translated from python-zmanim
- * */
+ */
 public class TestJewishCalendar {
     public List<Integer> allYearTypes() {
         return Arrays.asList(
@@ -43,16 +46,6 @@ public class TestJewishCalendar {
         return Arrays.asList("9-25", "9-26", "9-27", "9-28", "9-29", "10-1", "10-2", "10-3");
     }
 
-    public Map<Integer, List<String>> leapPurim() {
-        Map<Integer, List<String>> result = new HashMap<>();
-        result.put(JewishCalendar.PURIM_KATAN, Collections.singletonList("12-14"));
-        result.put(JewishCalendar.SHUSHAN_PURIM_KATAN, Collections.singletonList("12-15"));
-        result.put(JewishCalendar.FAST_OF_ESTHER, Collections.singletonList("13-13"));
-        result.put(JewishCalendar.PURIM, Collections.singletonList("13-14"));
-        result.put(JewishCalendar.SHUSHAN_PURIM, Collections.singletonList("13-15"));
-        return result;
-    }
-
     public Map<Integer, List<String>> standardSignificantDays() {
         Map<Integer, List<String>> result = new HashMap<>();
         result.put(JewishCalendar.EREV_PESACH, Collections.singletonList("1-14"));
@@ -82,6 +75,16 @@ public class TestJewishCalendar {
         result.put(JewishCalendar.FAST_OF_ESTHER, Collections.singletonList("12-13"));
         result.put(JewishCalendar.PURIM, Collections.singletonList("12-14"));
         result.put(JewishCalendar.SHUSHAN_PURIM, Collections.singletonList("12-15"));
+        return result;
+    }
+
+    public Map<Integer, List<String>> leapPurim() {
+        Map<Integer, List<String>> result = new HashMap<>();
+        result.put(JewishCalendar.PURIM_KATAN, Collections.singletonList("12-14"));
+        result.put(JewishCalendar.SHUSHAN_PURIM_KATAN, Collections.singletonList("12-15"));
+        result.put(JewishCalendar.FAST_OF_ESTHER, Collections.singletonList("13-13"));
+        result.put(JewishCalendar.PURIM, Collections.singletonList("13-14"));
+        result.put(JewishCalendar.SHUSHAN_PURIM, Collections.singletonList("13-15"));
         return result;
     }
 
@@ -418,7 +421,7 @@ public class TestJewishCalendar {
         expected.put(JewishCalendar.YOM_HAZIKARON, Collections.singletonList("2-2"));
         expected.put(JewishCalendar.YOM_HAATZMAUT, Collections.singletonList("2-3"));
         expected.put(JewishCalendar.YOM_YERUSHALAYIM, Collections.singletonList("2-28"));
-        Map<Integer, List<String>> result = specificDaysMatching(allDays, new ArrayList(expected.keySet()));
+        Map<Integer, List<String>> result = specificDaysMatching(allDays, new ArrayList<>(expected.keySet()));
         assertEquals(expected, result);
     }
 
@@ -490,7 +493,10 @@ public class TestJewishCalendar {
                 "1-15", "1-16", "1-17", "1-18", "1-19", "1-20", "1-21", "1-22",
                 "2-14", "2-18", "3-6", "3-7", "5-15"
         );
-        assertEquals(expected, allDays.get(Boolean.TRUE));
+        List<String> allDaysList = allDays.get(Boolean.TRUE);
+        expected.sort(String.CASE_INSENSITIVE_ORDER);
+        allDaysList.sort(String.CASE_INSENSITIVE_ORDER);
+        assertEquals(expected, allDaysList);
     }
 
     @Test
@@ -518,11 +524,14 @@ public class TestJewishCalendar {
 
         Map<Object, List<String>> allDays = TestHelper.allDaysMatching(year, JewishCalendar::isYomTov, true, true);
 //        List<String> allDaysList = allDays.values().stream().flatMap(List::stream).collect(Collectors.toList());
+        List<String> allDaysList = allDays.get(Boolean.TRUE);
         List<String> expected = Arrays.asList(
                 "7-1", "7-2", "7-10", "7-15", "7-16", "7-22", "7-23",
                 "1-15", "1-16", "1-21", "1-22", "3-6", "3-7"
         );
-        assertEquals(expected, allDays.get(Boolean.TRUE));
+        expected.sort(String.CASE_INSENSITIVE_ORDER);
+        allDaysList.sort(String.CASE_INSENSITIVE_ORDER);
+        assertEquals(expected, allDaysList);
     }
 
     @Test
@@ -535,6 +544,8 @@ public class TestJewishCalendar {
                 "7-1", "7-2", "7-10", "7-15", "7-16", "7-22", "7-23",
                 "1-15", "1-16", "1-21", "1-22", "3-6", "3-7"
         );
+        expected.sort(String.CASE_INSENSITIVE_ORDER);
+        allDaysList.sort(String.CASE_INSENSITIVE_ORDER);
         assertEquals(expected, allDaysList);
     }
 
@@ -547,6 +558,8 @@ public class TestJewishCalendar {
         List<String> expected = Arrays.asList(
                 "7-1", "7-2", "7-10", "7-15", "7-22", "1-15", "1-21", "3-6"
         );
+        expected.sort(String.CASE_INSENSITIVE_ORDER);
+        allDaysList.sort(String.CASE_INSENSITIVE_ORDER);
         assertEquals(expected, allDaysList);
     }
 
@@ -575,6 +588,420 @@ public class TestJewishCalendar {
         List<String> expectedShabbosos = TestHelper.allDaysMatching(year, c -> c.getDayOfWeek() == 7).get(Boolean.TRUE);
         List<String> expected = expectedYomTov.stream().distinct().collect(Collectors.toList());
         expected.addAll(expectedShabbosos.stream().distinct().collect(Collectors.toList()));
+        expected.sort(String.CASE_INSENSITIVE_ORDER);
+        allDaysList.sort(String.CASE_INSENSITIVE_ORDER);
         assertEquals(expected, allDaysList);
+    }
+
+
+    @Test
+    public void testIsTomorrowAssurBemelachaInIsrael() {
+        int year = leapShabbosShelaimim();
+
+        Map<Object, List<String>> allDays = TestHelper.allDaysMatching(year, JewishCalendar::isTomorrowShabbosOrYomTov, true);
+        List<String> flattenedDays = allDays.get(Boolean.TRUE);
+
+        List<String> expectedErevYomTov = Arrays.asList("7-9", "7-14", "7-21", "1-14", "1-20", "3-5", "6-29");
+        List<String> expectedErevYomTovSheni = Collections.singletonList("7-1");
+
+        Map<Object, List<String>> expectedErevShabbos = TestHelper.allDaysMatching(year, c -> c.getDayOfWeek() == 6);
+        List<String> flattenedErevShabbos = expectedErevShabbos.get(Boolean.TRUE);
+
+        List<String> expected = new ArrayList<>(expectedErevYomTov);
+        expected.addAll(expectedErevYomTovSheni);
+        expected.addAll(flattenedErevShabbos);
+
+        Collections.sort(flattenedDays);
+        Collections.sort(expected);
+
+        assertEquals(flattenedDays, expected);
+    }
+
+    @Test
+    public void testHasDelayedCandleLightingForNonCandleLightingDay() {
+        String date = "2018-09-13";
+        JewishCalendar subject = new JewishCalendar(parseDate(date));
+        assertFalse(subject.hasDelayedCandleLighting());
+    }
+
+    @Test
+    public void testHasDelayedCandleLightingForStandardErevShabbos() {
+        String date = "2018-09-14";
+        JewishCalendar subject = new JewishCalendar(parseDate(date));
+        assertFalse(subject.hasDelayedCandleLighting());
+    }
+
+    @Test
+    public void testHasDelayedCandleLightingForStandardErevYomTov() {
+        String date = "2018-09-30";
+        JewishCalendar subject = new JewishCalendar(parseDate(date));
+        assertFalse(subject.hasDelayedCandleLighting());
+    }
+
+    @Test
+    public void testHasDelayedCandleLightingForStandardFirstDayYomTov() {
+        String date = "2018-10-01";
+        JewishCalendar subject = new JewishCalendar(parseDate(date));
+        assertTrue(subject.hasDelayedCandleLighting());
+    }
+
+    @Test
+    public void testHasDelayedCandleLightingForYomTovErevShabbos() {
+        String date = "2019-04-26";
+        JewishCalendar subject = new JewishCalendar(parseDate(date));
+        assertFalse(subject.hasDelayedCandleLighting());
+    }
+
+    @Test
+    public void testHasDelayedCandleLightingForShabbosFollowedByYomTov() {
+        String date = "2019-06-08";
+        JewishCalendar subject = new JewishCalendar(parseDate(date));
+        assertTrue(subject.hasDelayedCandleLighting());
+    }
+
+    @Test
+    public void testIsYomTovSheniOutsideIsrael() {
+        int year = TestHelper.leapShabbosShelaimim();
+
+        Map<Object, List<String>> allDays = TestHelper.allDaysMatching(year, c -> c.isYomTovSheni());
+        List<String> flattenedDays = allDays.get(Boolean.TRUE);
+
+        List<String> expectedDays = Arrays.asList("7-2", "7-16", "7-23", "1-16", "1-22", "3-7");
+
+        assertEquals(flattenedDays, expectedDays);
+    }
+
+    @Test
+    public void testIsYomTovSheniInIsrael() {
+        int year = TestHelper.leapShabbosShelaimim();
+
+        Map<Object, List<String>> allDays = TestHelper.allDaysMatching(year, c -> c.isYomTovSheni(), true);
+        List<String> flattenedDays = allDays.get(Boolean.TRUE);
+
+
+        List<String> expectedDays = Collections.singletonList("7-2");
+
+        assertEquals(flattenedDays, expectedDays);
+    }
+
+    @Test
+    public void testIsErevYomTovSheniOutsideIsrael() {
+        int year = TestHelper.leapShabbosShelaimim();
+
+        Map<Object, List<String>> allDays = TestHelper.allDaysMatching(year, JewishCalendar::isErevYomTovSheni);
+        List<String> flattenedDays = allDays.get(Boolean.TRUE);
+
+
+        List<String> expectedDays = Arrays.asList("7-1", "7-15", "7-22", "1-15", "1-21", "3-6");
+
+        assertEquals(flattenedDays, expectedDays);
+    }
+
+    @Test
+    public void testIsErevYomTovSheniInIsrael() {
+        int year = TestHelper.leapShabbosShelaimim();
+
+        Map<Object, List<String>> allDays = TestHelper.allDaysMatching(year, JewishCalendar::isErevYomTovSheni, true);
+        List<String> flattenedDays = allDays.get(Boolean.TRUE);
+
+
+        List<String> expectedDays = Collections.singletonList("7-1");
+
+        assertEquals(flattenedDays, expectedDays);
+    }
+
+    @Test
+    public void testIsCholHamoedOutsideIsrael() {
+        int year = TestHelper.leapShabbosShelaimim();
+
+        Map<Object, List<String>> allDays = TestHelper.allDaysMatching(year, JewishCalendar::isCholHamoed);
+        List<String> flattenedDays = allDays.get(Boolean.TRUE);
+
+
+        List<String> expected = Arrays.asList("7-17", "7-18", "7-19", "7-20", "7-21", "1-17", "1-18", "1-19", "1-20");
+
+        assertEquals(flattenedDays, expected);
+    }
+
+    @Test
+    public void testIsCholHamoedInIsrael() {
+        int year = TestHelper.leapShabbosShelaimim();
+
+        Map<Object, List<String>> allDays = TestHelper.allDaysMatching(year, JewishCalendar::isCholHamoed, true);
+        List<String> flattenedDays = allDays.get(Boolean.TRUE);
+
+
+        List<String> expected = Arrays.asList("7-16", "7-17", "7-18", "7-19", "7-20", "7-21", "1-16", "1-17", "1-18", "1-19", "1-20");
+
+        assertEquals(flattenedDays, expected);
+    }
+
+    @Test
+    public void testIsErevYomTovOutsideIsrael() {
+        int year = TestHelper.leapShabbosShelaimim();
+
+        Map<Object, List<String>> allDays = TestHelper.allDaysMatching(year, JewishCalendar::isErevYomTov);
+        List<String> flattenedDays = allDays.get(Boolean.TRUE);
+
+
+        List<String> expected = Arrays.asList("7-9", "7-14", "7-21", "1-14", "1-20", "3-5", "6-29");
+
+        assertEquals(flattenedDays, expected);
+    }
+
+    @Test
+    public void testIsErevYomTovInIsrael() {
+        int year = TestHelper.leapShabbosShelaimim();
+
+        Map<Object, List<String>> allDays = TestHelper.allDaysMatching(year, JewishCalendar::isErevYomTov, true);
+        List<String> flattenedDays = allDays.get(Boolean.TRUE);
+
+
+        List<String> expected = Arrays.asList("7-9", "7-14", "7-21", "1-14", "1-20", "3-5", "6-29");
+
+        assertEquals(flattenedDays, expected);
+    }
+
+    @Test
+    public void testIsTaanis() {
+        int year = TestHelper.leapShabbosShelaimim();
+
+        Map<Object, List<String>> allDays = TestHelper.allDaysMatching(year, JewishCalendar::isTaanis);
+        List<String> flattenedDays = allDays.get(Boolean.TRUE);
+
+
+        List<String> expected = Arrays.asList("7-3", "7-10", "10-10", "13-13", "4-17", "5-9");
+
+        assertEquals(flattenedDays, expected);
+    }
+
+    @Test
+    public void testIsTaanisBechorim() {
+        int year = TestHelper.leapShabbosShelaimim();
+
+        Map<Object, List<String>> allDays = TestHelper.allDaysMatching(year, c -> c.isTaanisBechoros());
+        List<String> flattenedDays = allDays.get(Boolean.TRUE);
+
+
+        List<String> expected = Collections.singletonList("1-14");
+
+        assertEquals(flattenedDays, expected);
+    }
+
+    @Test
+    public void testIsTaanisBechorimForNonStandardYear() {
+        int year = TestHelper.standardShabbosChaseirim();
+
+        Map<Object, List<String>> allDays = TestHelper.allDaysMatching(year, JewishCalendar::isTaanisBechoros);
+        List<String> flattenedDays = allDays.get(Boolean.TRUE);
+
+
+        List<String> expected = Collections.singletonList("1-12");
+
+        assertEquals(flattenedDays, expected);
+    }
+
+    @Test
+    public void testIsShabbosMevorchim() {
+        int year = TestHelper.leapMondayShelaimim();
+
+        Map<Object, List<String>> allDays = TestHelper.allDaysMatching(year, JewishCalendar::isShabbosMevorchim);
+        List<String> flattenedDays = allDays.get(Boolean.TRUE);
+
+
+        List<String> expected = Arrays.asList("7-27", "8-25", "9-23", "10-28", "11-27", "12-25", "13-23", "1-29", "2-27", "3-26", "4-24", "5-23");
+
+        assertEquals(flattenedDays, expected);
+    }
+
+    @Test
+    public void testIsRoshChodesh() {
+        int year = TestHelper.leapShabbosShelaimim();
+
+        Map<Object, List<String>> allDays = TestHelper.allDaysMatching(year, JewishCalendar::isRoshChodesh);
+        List<String> flattenedDays = allDays.get(Boolean.TRUE);
+
+
+        List<String> expected = Arrays.asList("7-30", "8-1", "8-30", "9-1", "9-30", "10-1", "11-1", "11-30", "12-1", "12-30", "13-1", "1-1", "1-30", "2-1", "3-1", "3-30", "4-1", "5-1", "5-30", "6-1");
+
+        assertEquals(flattenedDays, expected);
+    }
+
+    @Test
+    public void testIsErevRoshChodesh() {
+        int year = TestHelper.leapShabbosShelaimim();
+
+        Map<Object, List<String>> allDays = TestHelper.allDaysMatching(year, JewishCalendar::isErevRoshChodesh);
+        List<String> flattenedDays = allDays.get(Boolean.TRUE);
+
+
+        List<String> expected = Arrays.asList("7-29", "8-29", "9-29", "10-29", "11-29", "12-29", "13-29", "1-29", "2-29", "3-29", "4-29", "5-29");
+
+        assertEquals(flattenedDays, expected);
+    }
+
+    @Test
+    public void testIsChanukahForChaseirimYears() {
+        int year = TestHelper.standardMondayChaseirim();
+
+        Map<Object, List<String>> allDays = TestHelper.allDaysMatching(year, JewishCalendar::isChanukah);
+        List<String> flattenedDays = allDays.get(Boolean.TRUE);
+
+
+        List<String> expected = chanukahForChaseirim();
+
+        assertEquals(flattenedDays, expected);
+    }
+
+    @Test
+    public void testIsChanukahForNonChaseirimYears() {
+        int year = TestHelper.standardTuesdayKesidran();
+
+        Map<Object, List<String>> allDays = TestHelper.allDaysMatching(year, JewishCalendar::isChanukah);
+        List<String> flattenedDays = allDays.get(Boolean.TRUE);
+
+
+        List<String> expected = standardSignificantDays().get(JewishCalendar.CHANUKAH);
+
+        assertEquals(flattenedDays, expected);
+    }
+
+    @Test
+    public void testDayOfChanukahForChaseirimYears() {
+        int year = TestHelper.standardMondayChaseirim();
+
+        List<String> expectedDays = chanukahForChaseirim();
+        List<Integer> result = new ArrayList<>();
+        for (String date : expectedDays) {
+            String[] parts = date.split("-");
+            result.add(new JewishCalendar(year, Integer.parseInt(parts[0]), Integer.parseInt(parts[1])).getDayOfChanukah());
+        }
+
+        assertEquals(result, IntStream.rangeClosed(1, 8).boxed().collect(Collectors.toList()));
+    }
+
+    @Test
+    public void testDayOfChanukahForNonChaseirimYears() {
+        int year = TestHelper.standardTuesdayKesidran();
+
+        List<String> expectedDays = standardSignificantDays().get(JewishCalendar.CHANUKAH);
+        List<Integer> result = new ArrayList<>();
+        for (String date : expectedDays) {
+            String[] parts = date.split("-");
+            result.add(new JewishCalendar(year, Integer.parseInt(parts[0]), Integer.parseInt(parts[1])).getDayOfChanukah());
+        }
+
+        assertEquals(result, IntStream.rangeClosed(1, 8).boxed().collect(Collectors.toList()));
+    }
+
+    @Test
+    public void testDayOfChanukahForNonChanukahDate() {
+        JewishCalendar calendar = new JewishCalendar(TestHelper.standardMondayChaseirim(), 7, 1);
+        assertEquals(-1, calendar.getDayOfChanukah());
+    }
+
+    @Test
+    public void testDayOfOmer() {
+        JewishCalendar calendar = new JewishCalendar(TestHelper.standardMondayChaseirim(), 1, 16);
+        List<Integer> foundDays = new ArrayList<>();
+
+        for (int n = 1; n < 50; n++) {
+            foundDays.add(calendar.getDayOfOmer());
+            calendar.forward(Calendar.DATE, 1);
+        }
+
+        assertEquals(foundDays, IntStream.rangeClosed(1, 49).boxed().collect(Collectors.toList()));
+    }
+
+    @Test
+    public void testDayOfOmerOutsideOfOmer() {
+        JewishCalendar calendar = new JewishCalendar(TestHelper.standardMondayChaseirim(), 7, 1);
+        assertEquals(-1, calendar.getDayOfOmer());
+    }
+
+    @Test
+    public void testSignificantShabbosForStandardMondayChaseirim() {
+        int year = TestHelper.standardMondayChaseirim();
+
+        Map<Object, List<String>> result = TestHelper.allDaysMatching(year, JewishCalendar::getSpecialShabbos);
+        Map<Object, List<String>> expected = new HashMap<>();
+        expected.put(JewishCalendar.Parsha.SHUVA, Collections.singletonList("7-6"));
+        expected.put(JewishCalendar.Parsha.SHKALIM, Collections.singletonList("11-29"));
+        expected.put(JewishCalendar.Parsha.ZACHOR, Collections.singletonList("12-13"));
+        expected.put(JewishCalendar.Parsha.PARA, Collections.singletonList("12-20"));
+        expected.put(JewishCalendar.Parsha.HACHODESH, Collections.singletonList("12-27"));
+        expected.put(JewishCalendar.Parsha.HAGADOL, Collections.singletonList("1-12"));
+
+        assertEquals(result, expected);
+    }
+
+    @Test
+    public void testSignificantShabbosForStandardMondayShelaimim() {
+        int year = TestHelper.standardMondayShelaimim();
+
+        Map<Object, List<String>> result = TestHelper.allDaysMatching(year, JewishCalendar::getSpecialShabbos);
+        Map<Object, List<String>> expected = new HashMap<>();
+        expected.put(JewishCalendar.Parsha.SHUVA, Collections.singletonList("7-6"));
+        expected.put(JewishCalendar.Parsha.SHKALIM, Collections.singletonList("11-27"));
+        expected.put(JewishCalendar.Parsha.ZACHOR, Collections.singletonList("12-11"));
+        expected.put(JewishCalendar.Parsha.PARA, Collections.singletonList("12-18"));
+        expected.put(JewishCalendar.Parsha.HACHODESH, Collections.singletonList("12-25"));
+        expected.put(JewishCalendar.Parsha.HAGADOL, Collections.singletonList("1-10"));
+
+        assertEquals(result, expected);
+    }
+
+    @Test
+    public void testSignificantShabbosForStandardTuesdayKesidran() {
+        int year = TestHelper.standardTuesdayKesidran();
+
+        Map<Object, List<String>> result = TestHelper.allDaysMatching(year, JewishCalendar::getSpecialShabbos);
+        Map<Object, List<String>> expected = new HashMap<>();
+        expected.put(JewishCalendar.Parsha.SHUVA, Collections.singletonList("7-5"));
+        expected.put(JewishCalendar.Parsha.SHKALIM, Collections.singletonList("11-27"));
+        expected.put(JewishCalendar.Parsha.ZACHOR, Collections.singletonList("12-11"));
+        expected.put(JewishCalendar.Parsha.PARA, Collections.singletonList("12-18"));
+        expected.put(JewishCalendar.Parsha.HACHODESH, Collections.singletonList("12-25"));
+        expected.put(JewishCalendar.Parsha.HAGADOL, Collections.singletonList("1-10"));
+
+        assertEquals(result, expected);
+    }
+
+    @Test
+    public void testSignificantShabbosForStandardThursdayKesidran() {
+        int year = TestHelper.standardThursdayKesidran();
+
+        Map<Object, List<String>> result = TestHelper.allDaysMatching(year, JewishCalendar::getSpecialShabbos);
+        Map<Object, List<String>> expected = new HashMap<>();
+        expected.put(JewishCalendar.Parsha.SHUVA, Collections.singletonList("7-3"));
+        expected.put(JewishCalendar.Parsha.SHKALIM, Collections.singletonList("11-25"));
+        expected.put(JewishCalendar.Parsha.ZACHOR, Collections.singletonList("12-9"));
+        expected.put(JewishCalendar.Parsha.PARA, Collections.singletonList("12-23"));
+        expected.put(JewishCalendar.Parsha.HACHODESH, Collections.singletonList("1-1"));
+        expected.put(JewishCalendar.Parsha.HAGADOL, Collections.singletonList("1-8"));
+
+        assertEquals(result, expected);
+    }
+
+    @Test
+    public void testSignificantShabbosForStandardThursdayShelaimim() {
+        int year = TestHelper.standardThursdayShelaimim();
+
+        Map<Object, List<String>> result = TestHelper.allDaysMatching(year, JewishCalendar::getSpecialShabbos);
+        Map<Object, List<String>> expected = new HashMap<>();
+        expected.put(JewishCalendar.Parsha.SHUVA, Collections.singletonList("7-3"));
+        expected.put(JewishCalendar.Parsha.SHKALIM, Collections.singletonList("12-1"));
+        expected.put(JewishCalendar.Parsha.ZACHOR, Collections.singletonList("12-8"));
+        expected.put(JewishCalendar.Parsha.PARA, Collections.singletonList("12-22"));
+        expected.put(JewishCalendar.Parsha.HACHODESH, Collections.singletonList("12-29"));
+        expected.put(JewishCalendar.Parsha.HAGADOL, Collections.singletonList("1-5"));
+
+        assertEquals(result, expected);
+    }
+
+    private Date parseDate(String dateString) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        ZonedDateTime dateTime = ZonedDateTime.parse(dateString + "T00:00:00Z");
+        return Date.from(dateTime.toInstant());
     }
 }
