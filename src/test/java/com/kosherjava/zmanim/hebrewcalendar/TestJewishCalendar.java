@@ -924,6 +924,7 @@ public class TestJewishCalendar {
         int year = TestHelper.standardMondayChaseirim();
 
         Map<Object, List<String>> result = TestHelper.allDaysMatching(year, JewishCalendar::getSpecialShabbos);
+        result.remove(JewishCalendar.Parsha.NONE);//remove non-shabbos
         Map<Object, List<String>> expected = new HashMap<>();
         expected.put(JewishCalendar.Parsha.SHUVA, Collections.singletonList("7-6"));
         expected.put(JewishCalendar.Parsha.SHKALIM, Collections.singletonList("11-29"));
@@ -932,7 +933,7 @@ public class TestJewishCalendar {
         expected.put(JewishCalendar.Parsha.HACHODESH, Collections.singletonList("12-27"));
         expected.put(JewishCalendar.Parsha.HAGADOL, Collections.singletonList("1-12"));
 
-        assertEquals(result, expected);
+        assertEquals(expected, result);
     }
 
     @Test
@@ -940,6 +941,7 @@ public class TestJewishCalendar {
         int year = TestHelper.standardMondayShelaimim();
 
         Map<Object, List<String>> result = TestHelper.allDaysMatching(year, JewishCalendar::getSpecialShabbos);
+        result.remove(JewishCalendar.Parsha.NONE);//remove non-shabbos
         Map<Object, List<String>> expected = new HashMap<>();
         expected.put(JewishCalendar.Parsha.SHUVA, Collections.singletonList("7-6"));
         expected.put(JewishCalendar.Parsha.SHKALIM, Collections.singletonList("11-27"));
@@ -948,7 +950,7 @@ public class TestJewishCalendar {
         expected.put(JewishCalendar.Parsha.HACHODESH, Collections.singletonList("12-25"));
         expected.put(JewishCalendar.Parsha.HAGADOL, Collections.singletonList("1-10"));
 
-        assertEquals(result, expected);
+        assertEquals(expected, result);
     }
 
     @Test
@@ -956,6 +958,7 @@ public class TestJewishCalendar {
         int year = TestHelper.standardTuesdayKesidran();
 
         Map<Object, List<String>> result = TestHelper.allDaysMatching(year, JewishCalendar::getSpecialShabbos);
+        result.remove(JewishCalendar.Parsha.NONE);//remove non-shabbos
         Map<Object, List<String>> expected = new HashMap<>();
         expected.put(JewishCalendar.Parsha.SHUVA, Collections.singletonList("7-5"));
         expected.put(JewishCalendar.Parsha.SHKALIM, Collections.singletonList("11-27"));
@@ -964,7 +967,7 @@ public class TestJewishCalendar {
         expected.put(JewishCalendar.Parsha.HACHODESH, Collections.singletonList("12-25"));
         expected.put(JewishCalendar.Parsha.HAGADOL, Collections.singletonList("1-10"));
 
-        assertEquals(result, expected);
+        assertEquals(expected, result);
     }
 
     @Test
@@ -972,6 +975,7 @@ public class TestJewishCalendar {
         int year = TestHelper.standardThursdayKesidran();
 
         Map<Object, List<String>> result = TestHelper.allDaysMatching(year, JewishCalendar::getSpecialShabbos);
+        result.remove(JewishCalendar.Parsha.NONE);//remove non-shabbos
         Map<Object, List<String>> expected = new HashMap<>();
         expected.put(JewishCalendar.Parsha.SHUVA, Collections.singletonList("7-3"));
         expected.put(JewishCalendar.Parsha.SHKALIM, Collections.singletonList("11-25"));
@@ -980,7 +984,7 @@ public class TestJewishCalendar {
         expected.put(JewishCalendar.Parsha.HACHODESH, Collections.singletonList("1-1"));
         expected.put(JewishCalendar.Parsha.HAGADOL, Collections.singletonList("1-8"));
 
-        assertEquals(result, expected);
+        assertEquals(expected, result);
     }
 
     @Test
@@ -988,6 +992,7 @@ public class TestJewishCalendar {
         int year = TestHelper.standardThursdayShelaimim();
 
         Map<Object, List<String>> result = TestHelper.allDaysMatching(year, JewishCalendar::getSpecialShabbos);
+        result.remove(JewishCalendar.Parsha.NONE);//remove non-shabbos
         Map<Object, List<String>> expected = new HashMap<>();
         expected.put(JewishCalendar.Parsha.SHUVA, Collections.singletonList("7-3"));
         expected.put(JewishCalendar.Parsha.SHKALIM, Collections.singletonList("12-1"));
@@ -996,7 +1001,7 @@ public class TestJewishCalendar {
         expected.put(JewishCalendar.Parsha.HACHODESH, Collections.singletonList("12-29"));
         expected.put(JewishCalendar.Parsha.HAGADOL, Collections.singletonList("1-5"));
 
-        assertEquals(result, expected);
+        assertEquals(expected, result);
     }
 
     private Date parseDate(String dateString) {
