@@ -166,6 +166,8 @@ public class TestJewishCalendar {
         Map<Integer, List<String>> expected = new HashMap<>(standardSignificantDays());
         expected.put(JewishCalendar.CHANUKAH, chanukahForChaseirim());
         expected.put(JewishCalendar.FAST_OF_ESTHER, Collections.singletonList("12-11"));
+        System.out.println("Expected: " + expected);
+        System.out.println("Actual  : " + result);
         assertEquals(expected, result);
 
         Map<Integer, List<String>> israelResult = TestHelper.allDaysMatching(year, JewishCalendar::getYomTovIndex, true);
@@ -173,6 +175,9 @@ public class TestJewishCalendar {
         Map<Integer, List<String>> israelExpected = new HashMap<>(israelStandardSignificantDays());
         israelExpected.put(JewishCalendar.CHANUKAH, chanukahForChaseirim());
         israelExpected.put(JewishCalendar.FAST_OF_ESTHER, Collections.singletonList("12-11"));
+
+        System.out.println("Israel expected: " + israelExpected);
+        System.out.println("Israel actual  : " + israelResult);
         assertEquals(israelExpected, israelResult);
     }
 
@@ -184,12 +189,17 @@ public class TestJewishCalendar {
         result.remove(-1); //remove non-yomim-tovim
 
         Map<Integer, List<String>> expected = new HashMap<>(standardSignificantDays());
+
+        System.out.println("Expected: " + expected);
+        System.out.println("Actual  : " + result);
         assertEquals(expected, result);
 
         Map<Integer, List<String>> israelResult = TestHelper.allDaysMatching(year, JewishCalendar::getYomTovIndex, true);
         israelResult.remove(-1); //remove non-yomim-tovim
 
         Map<Integer, List<String>> israelExpected = new HashMap<>(israelStandardSignificantDays());
+        System.out.println("Israel expected: " + israelExpected);
+        System.out.println("Israel actual  : " + israelResult);
         assertEquals(israelExpected, israelResult);
     }
 
@@ -200,11 +210,16 @@ public class TestJewishCalendar {
         Map<Integer, List<String>> result = TestHelper.allDaysMatching(year, JewishCalendar::getYomTovIndex);
         result.remove(-1); //remove non-yomim-tovim
         Map<Integer, List<String>> expected = new HashMap<>(standardSignificantDays());
+        System.out.println("Expected: " + expected);
+        System.out.println("Actual  : " + result);
         assertEquals(expected, result);
 
         Map<Integer, List<String>> israelResult = TestHelper.allDaysMatching(year, JewishCalendar::getYomTovIndex, true);
         result.remove(-1); //remove non-yomim-tovim
         Map<Integer, List<String>> israelExpected = new HashMap<>(israelStandardSignificantDays());
+
+        System.out.println("Israel expected: " + israelExpected);
+        System.out.println("Israel actual  : " + israelResult);
         assertEquals(israelExpected, israelResult);
     }
 
@@ -218,6 +233,8 @@ public class TestJewishCalendar {
         expected.put(JewishCalendar.FAST_OF_GEDALYAH, Collections.singletonList("7-4"));
         expected.put(JewishCalendar.SEVENTEEN_OF_TAMMUZ, Collections.singletonList("4-18"));
         expected.put(JewishCalendar.TISHA_BEAV, Collections.singletonList("5-10"));
+        System.out.println("Expected: " + expected);
+        System.out.println("Actual  : " + result);
         assertEquals(expected, result);
 
         Map<Integer, List<String>> israelResult = TestHelper.allDaysMatching(year, JewishCalendar::getYomTovIndex, true);
@@ -226,6 +243,9 @@ public class TestJewishCalendar {
         israelExpected.put(JewishCalendar.FAST_OF_GEDALYAH, Collections.singletonList("7-4"));
         israelExpected.put(JewishCalendar.SEVENTEEN_OF_TAMMUZ, Collections.singletonList("4-18"));
         israelExpected.put(JewishCalendar.TISHA_BEAV, Collections.singletonList("5-10"));
+
+        System.out.println("Israel expected: " + israelExpected);
+        System.out.println("Israel actual  : " + israelResult);
         assertEquals(israelExpected, israelResult);
     }
 
@@ -237,12 +257,17 @@ public class TestJewishCalendar {
         result.remove(-1); //remove non-yomim-tovim
         Map<Integer, List<String>> expected = new HashMap<>(standardSignificantDays());
         expected.put(JewishCalendar.FAST_OF_GEDALYAH, Collections.singletonList("7-4"));
+        System.out.println("Expected: " + expected);
+        System.out.println("Actual  : " + result);
         assertEquals(expected, result);
 
         Map<Integer, List<String>> israelResult = TestHelper.allDaysMatching(year, JewishCalendar::getYomTovIndex, true);
         israelResult.remove(-1); //remove non-yomim-tovim
         Map<Integer, List<String>> israelExpected = new HashMap<>(israelStandardSignificantDays());
         israelExpected.put(JewishCalendar.FAST_OF_GEDALYAH, Collections.singletonList("7-4"));
+
+        System.out.println("Israel expected: " + israelExpected);
+        System.out.println("Israel actual  : " + israelResult);
         assertEquals(israelExpected, israelResult);
     }
 
@@ -254,12 +279,18 @@ public class TestJewishCalendar {
         result.remove(-1); //remove non-yomim-tovim
         Map<Integer, List<String>> expected = new HashMap<>(standardSignificantDays());
         expected.put(JewishCalendar.CHANUKAH, chanukahForChaseirim());
+
+        System.out.println("Expected: " + expected);
+        System.out.println("Actual  : " + result);
         assertEquals(expected, result);
 
         Map<Integer, List<String>> israelResult = TestHelper.allDaysMatching(year, JewishCalendar::getYomTovIndex, true);
         israelResult.remove(-1); //remove non-yomim-tovim
         Map<Integer, List<String>> israelExpected = new HashMap<>(israelStandardSignificantDays());
         israelExpected.put(JewishCalendar.CHANUKAH, chanukahForChaseirim());
+
+        System.out.println("Israel expected: " + israelExpected);
+        System.out.println("Israel actual  : " + israelResult);
         assertEquals(israelExpected, israelResult);
     }
 
@@ -271,12 +302,17 @@ public class TestJewishCalendar {
         result.remove(-1); //remove non-yomim-tovim
         Map<Integer, List<String>> expected = new HashMap<>(standardSignificantDays());
         expected.put(JewishCalendar.FAST_OF_ESTHER, Collections.singletonList("12-11"));
+        System.out.println("Expected: " + expected);
+        System.out.println("Actual  : " + result);
         assertEquals(expected, result);
 
         Map<Integer, List<String>> israelResult = TestHelper.allDaysMatching(year, JewishCalendar::getYomTovIndex, true);
         israelResult.remove(-1); //remove non-yomim-tovim
         Map<Integer, List<String>> israelExpected = new HashMap<>(israelStandardSignificantDays());
         israelExpected.put(JewishCalendar.FAST_OF_ESTHER, Collections.singletonList("12-11"));
+
+        System.out.println("Israel expected: " + israelExpected);
+        System.out.println("Israel actual  : " + israelResult);
         assertEquals(israelExpected, israelResult);
     }
 
@@ -288,12 +324,18 @@ public class TestJewishCalendar {
         result.remove(-1); //remove non-yomim-tovim
         Map<Integer, List<String>> expected = new HashMap<>(leapSignificantDays());
         expected.put(JewishCalendar.CHANUKAH, chanukahForChaseirim());
+
+        System.out.println("Expected: " + expected);
+        System.out.println("Actual  : " + result);
         assertEquals(expected, result);
 
         Map<Integer, List<String>> israelResult = TestHelper.allDaysMatching(year, JewishCalendar::getYomTovIndex, true);
         israelResult.remove(-1); //remove non-yomim-tovim
         Map<Integer, List<String>> israelExpected = new HashMap<Integer, List<String>>(israelLeapSignificantDays());
         israelExpected.put(JewishCalendar.CHANUKAH, chanukahForChaseirim());
+
+        System.out.println("Israel expected: " + israelExpected);
+        System.out.println("Israel actual  : " + israelResult);
         assertEquals(israelExpected, israelResult);
     }
 
@@ -306,6 +348,9 @@ public class TestJewishCalendar {
         Map<Integer, List<String>> expected = new HashMap<>(leapSignificantDays());
         expected.put(JewishCalendar.SEVENTEEN_OF_TAMMUZ, Collections.singletonList("4-18"));
         expected.put(JewishCalendar.TISHA_BEAV, Collections.singletonList("5-10"));
+
+        System.out.println("Expected: " + expected);
+        System.out.println("Actual  : " + result);
         assertEquals(expected, result);
 
         Map<Integer, List<String>> israelResult = TestHelper.allDaysMatching(year, JewishCalendar::getYomTovIndex, true);
@@ -313,6 +358,9 @@ public class TestJewishCalendar {
         Map<Integer, List<String>> israelExpected = new HashMap<>(israelLeapSignificantDays());
         israelExpected.put(JewishCalendar.SEVENTEEN_OF_TAMMUZ, Collections.singletonList("4-18"));
         israelExpected.put(JewishCalendar.TISHA_BEAV, Collections.singletonList("5-10"));
+
+        System.out.println("Israel expected: " + israelExpected);
+        System.out.println("Israel actual  : " + israelResult);
         assertEquals(israelExpected, israelResult);
     }
 
@@ -325,6 +373,8 @@ public class TestJewishCalendar {
         Map<Integer, List<String>> expected = new HashMap<>(leapSignificantDays());
         expected.put(JewishCalendar.SEVENTEEN_OF_TAMMUZ, Collections.singletonList("4-18"));
         expected.put(JewishCalendar.TISHA_BEAV, Collections.singletonList("5-10"));
+        System.out.println("Expected: " + expected);
+        System.out.println("Actual  : " + result);
         assertEquals(expected, result);
 
         Map<Integer, List<String>> israelResult = TestHelper.allDaysMatching(year, JewishCalendar::getYomTovIndex, true);
@@ -332,6 +382,9 @@ public class TestJewishCalendar {
         Map<Integer, List<String>> israelExpected = new HashMap<>(israelLeapSignificantDays());
         israelExpected.put(JewishCalendar.SEVENTEEN_OF_TAMMUZ, Collections.singletonList("4-18"));
         israelExpected.put(JewishCalendar.TISHA_BEAV, Collections.singletonList("5-10"));
+
+        System.out.println("Israel expected: " + israelExpected);
+        System.out.println("Israel actual  : " + israelResult);
         assertEquals(israelExpected, israelResult);
     }
 
@@ -344,6 +397,9 @@ public class TestJewishCalendar {
         Map<Integer, List<String>> expected = new HashMap<>(leapSignificantDays());
         expected.put(JewishCalendar.FAST_OF_GEDALYAH, Collections.singletonList("7-4"));
         expected.put(JewishCalendar.CHANUKAH, chanukahForChaseirim());
+
+        System.out.println("Expected: " + expected);
+        System.out.println("Actual  : " + result);
         assertEquals(expected, result);
 
         Map<Integer, List<String>> israelResult = TestHelper.allDaysMatching(year, JewishCalendar::getYomTovIndex, true);
@@ -351,6 +407,9 @@ public class TestJewishCalendar {
         Map<Integer, List<String>> israelExpected = new HashMap<>(israelLeapSignificantDays());
         israelExpected.put(JewishCalendar.FAST_OF_GEDALYAH, Collections.singletonList("7-4"));
         israelExpected.put(JewishCalendar.CHANUKAH, chanukahForChaseirim());
+
+        System.out.println("Israel expected: " + israelExpected);
+        System.out.println("Israel actual  : " + israelResult);
         assertEquals(israelExpected, israelResult);
     }
 
@@ -363,6 +422,9 @@ public class TestJewishCalendar {
         Map<Integer, List<String>> expected = new HashMap<>(leapSignificantDays());
         expected.put(JewishCalendar.FAST_OF_GEDALYAH, Collections.singletonList("7-4"));
         expected.put(JewishCalendar.FAST_OF_ESTHER, Collections.singletonList("13-11"));
+
+        System.out.println("Expected: " + expected);
+        System.out.println("Actual  : " + result);
         assertEquals(expected, result);
 
         Map<Integer, List<String>> israelResult = TestHelper.allDaysMatching(year, JewishCalendar::getYomTovIndex, true);
@@ -370,6 +432,9 @@ public class TestJewishCalendar {
         Map<Integer, List<String>> israelExpected = new HashMap<>(israelLeapSignificantDays());
         israelExpected.put(JewishCalendar.FAST_OF_GEDALYAH, Collections.singletonList("7-4"));
         israelExpected.put(JewishCalendar.FAST_OF_ESTHER, Collections.singletonList("13-11"));
+
+        System.out.println("Israel expected: " + israelExpected);
+        System.out.println("Israel actual  : " + israelResult);
         assertEquals(israelExpected, israelResult);
     }
 
@@ -382,6 +447,9 @@ public class TestJewishCalendar {
         Map<Integer, List<String>> expected = new HashMap<>(leapSignificantDays());
         expected.put(JewishCalendar.CHANUKAH, chanukahForChaseirim());
         expected.put(JewishCalendar.FAST_OF_ESTHER, Collections.singletonList("13-11"));
+
+        System.out.println("Expected: " + expected);
+        System.out.println("Actual  : " + result);
         assertEquals(expected, result);
 
         Map<Integer, List<String>> israelResult = TestHelper.allDaysMatching(year, JewishCalendar::getYomTovIndex, true);
@@ -389,6 +457,9 @@ public class TestJewishCalendar {
         Map<Integer, List<String>> israelExpected = new HashMap<>(israelLeapSignificantDays());
         israelExpected.put(JewishCalendar.CHANUKAH, chanukahForChaseirim());
         israelExpected.put(JewishCalendar.FAST_OF_ESTHER, Collections.singletonList("13-11"));
+
+        System.out.println("Israel expected: " + israelExpected);
+        System.out.println("Israel actual  : " + israelResult);
         assertEquals(israelExpected, israelResult);
     }
 
@@ -399,11 +470,17 @@ public class TestJewishCalendar {
         Map<Integer, List<String>> result = TestHelper.allDaysMatching(year, JewishCalendar::getYomTovIndex);
         result.remove(-1); //remove non-yomim-tovim
         Map<Integer, List<String>> expected = new HashMap<>(leapSignificantDays());
+
+        System.out.println("Expected: " + expected);
+        System.out.println("Actual  : " + result);
         assertEquals(expected, result);
 
         Map<Integer, List<String>> israelResult = TestHelper.allDaysMatching(year, JewishCalendar::getYomTovIndex, true);
         israelResult.remove(-1); //remove non-yomim-tovim
         Map<Integer, List<String>> israelExpected = new HashMap<>(israelLeapSignificantDays());
+
+        System.out.println("Israel expected: " + israelExpected);
+        System.out.println("Israel actual  : " + israelResult);
         assertEquals(israelExpected, israelResult);
     }
 
@@ -422,6 +499,9 @@ public class TestJewishCalendar {
         expected.put(JewishCalendar.YOM_HAATZMAUT, Collections.singletonList("2-3"));
         expected.put(JewishCalendar.YOM_YERUSHALAYIM, Collections.singletonList("2-28"));
         Map<Integer, List<String>> result = specificDaysMatching(allDays, new ArrayList<>(expected.keySet()));
+
+        System.out.println("Expected: " + expected);
+        System.out.println("Actual  : " + result);
         assertEquals(expected, result);
     }
 
@@ -440,6 +520,9 @@ public class TestJewishCalendar {
         expected.put(JewishCalendar.YOM_HAATZMAUT, Collections.singletonList("2-6"));
         expected.put(JewishCalendar.YOM_YERUSHALAYIM, Collections.singletonList("2-28"));
         Map<Object, List<String>> result = specificDaysMatching(allDays, new ArrayList<>(expected.keySet()));
+
+        System.out.println("Expected: " + expected);
+        System.out.println("Actual  : " + result);
         assertEquals(expected, result);
     }
 
@@ -458,6 +541,9 @@ public class TestJewishCalendar {
         expected.put(JewishCalendar.YOM_HAATZMAUT, Collections.singletonList("2-5"));
         expected.put(JewishCalendar.YOM_YERUSHALAYIM, Collections.singletonList("2-28"));
         Map<Object, List<String>> result = specificDaysMatching(allDays, new ArrayList<>(expected.keySet()));
+
+        System.out.println("Expected: " + expected);
+        System.out.println("Actual  : " + result);
         assertEquals(expected, result);
     }
 
@@ -476,6 +562,9 @@ public class TestJewishCalendar {
         expected.put(JewishCalendar.YOM_HAATZMAUT, Collections.singletonList("2-4"));
         expected.put(JewishCalendar.YOM_YERUSHALAYIM, Collections.singletonList("2-28"));
         Map<Object, List<String>> result = specificDaysMatching(allDays, new ArrayList<>(expected.keySet()));
+
+        System.out.println("Expected: " + expected);
+        System.out.println("Actual  : " + result);
         assertEquals(expected, result);
     }
 
@@ -496,6 +585,9 @@ public class TestJewishCalendar {
         List<String> allDaysList = allDays.get(Boolean.TRUE);
         expected.sort(String.CASE_INSENSITIVE_ORDER);
         allDaysList.sort(String.CASE_INSENSITIVE_ORDER);
+
+        System.out.println("Expected: " + expected);
+        System.out.println("Actual  : " + allDaysList);
         assertEquals(expected, allDaysList);
     }
 
@@ -515,6 +607,9 @@ public class TestJewishCalendar {
         );
         expected.sort(String.CASE_INSENSITIVE_ORDER);
         allDaysList.sort(String.CASE_INSENSITIVE_ORDER);
+
+        System.out.println("Expected: " + expected);
+        System.out.println("Actual  : " + allDaysList);
         assertEquals(expected, allDaysList);
     }
 
@@ -531,6 +626,9 @@ public class TestJewishCalendar {
         );
         expected.sort(String.CASE_INSENSITIVE_ORDER);
         allDaysList.sort(String.CASE_INSENSITIVE_ORDER);
+
+        System.out.println("Expected: " + expected);
+        System.out.println("Actual  : " + allDaysList);
         assertEquals(expected, allDaysList);
     }
 
@@ -590,6 +688,8 @@ public class TestJewishCalendar {
         expected.addAll(expectedShabbosos.stream().distinct().collect(Collectors.toList()));
         expected.sort(String.CASE_INSENSITIVE_ORDER);
         allDaysList.sort(String.CASE_INSENSITIVE_ORDER);
+        System.out.println("Expected: " + expected);
+        System.out.println("Actual  : " + allDaysList);
         assertEquals(expected, allDaysList);
     }
 
@@ -614,7 +714,9 @@ public class TestJewishCalendar {
         Collections.sort(flattenedDays);
         Collections.sort(expected);
 
-        assertEquals(flattenedDays, expected);
+        System.out.println("Expected: " + expected);
+        System.out.println("Actual  : " + flattenedDays);
+        assertEquals(expected, flattenedDays);
     }
 
     @Test
@@ -933,6 +1035,8 @@ public class TestJewishCalendar {
         expected.put(JewishCalendar.Parsha.HACHODESH, Collections.singletonList("12-27"));
         expected.put(JewishCalendar.Parsha.HAGADOL, Collections.singletonList("1-12"));
 
+        System.out.println("Expected: " + expected);
+        System.out.println("Actual  : " + result);
         assertEquals(expected, result);
     }
 
@@ -950,6 +1054,8 @@ public class TestJewishCalendar {
         expected.put(JewishCalendar.Parsha.HACHODESH, Collections.singletonList("12-25"));
         expected.put(JewishCalendar.Parsha.HAGADOL, Collections.singletonList("1-10"));
 
+        System.out.println("Expected: " + expected);
+        System.out.println("Actual  : " + result);
         assertEquals(expected, result);
     }
 
@@ -967,6 +1073,8 @@ public class TestJewishCalendar {
         expected.put(JewishCalendar.Parsha.HACHODESH, Collections.singletonList("12-25"));
         expected.put(JewishCalendar.Parsha.HAGADOL, Collections.singletonList("1-10"));
 
+        System.out.println("Expected: " + expected);
+        System.out.println("Actual  : " + result);
         assertEquals(expected, result);
     }
 
@@ -984,6 +1092,8 @@ public class TestJewishCalendar {
         expected.put(JewishCalendar.Parsha.HACHODESH, Collections.singletonList("1-1"));
         expected.put(JewishCalendar.Parsha.HAGADOL, Collections.singletonList("1-8"));
 
+        System.out.println("Expected: " + expected);
+        System.out.println("Actual  : " + result);
         assertEquals(expected, result);
     }
 
@@ -1001,6 +1111,8 @@ public class TestJewishCalendar {
         expected.put(JewishCalendar.Parsha.HACHODESH, Collections.singletonList("12-29"));
         expected.put(JewishCalendar.Parsha.HAGADOL, Collections.singletonList("1-5"));
 
+        System.out.println("Expected: " + expected);
+        System.out.println("Actual  : " + result);
         assertEquals(expected, result);
     }
 
