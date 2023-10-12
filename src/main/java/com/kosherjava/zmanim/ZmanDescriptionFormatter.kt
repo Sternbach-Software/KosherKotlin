@@ -57,26 +57,39 @@ class ZmanDescriptionFormatter {
         * */
         val startZman = definitionOfDayUsed?.dayStart?.zmanToCalcMethodUsed?.keys?.firstOrNull()
         val endZman = definitionOfDayUsed?.dayEnd?.zmanToCalcMethodUsed?.keys?.firstOrNull()
+        val startCalcMethod = definitionOfDayUsed?.dayStart?.zmanToCalcMethodUsed?.values?.firstOrNull()
+        val endCalcMethod = definitionOfDayUsed?.dayEnd?.zmanToCalcMethodUsed?.values?.firstOrNull()
+
+        val mainCalculationMethod =
+            if (rules.mainCalculationMethodUsed is ZmanCalculationMethod.Degrees) " - ${rules.mainCalculationMethodUsed.format()}"
+            else if (rules.mainCalculationMethodUsed != null) " - ${rules.mainCalculationMethodUsed.valueToString()}"
+            else ""
+        val hasMainCalculationMethod = mainCalculationMethod.isNotBlank()
         result.apply {
             if(startZman != null && endZman != null) {
-                append(startZman.friendlyNameEnglish)
-                val startCalcMethod = definitionOfDayUsed.dayStart.zmanToCalcMethodUsed.values.firstOrNull()
-                if(startCalcMethod != null && startCalcMethod != ZmanCalculationMethod.Unspecified) {
-                    append("(")
-                    append(startCalcMethod.valueToString())
-                    append(")")
+                if(hasMainCalculationMethod) {
+                    append(startZman.friendlyNameEnglish)
+                    if(startCalcMethod != null && startCalcMethod != ZmanCalculationMethod.Unspecified) {
+                        append("(")
+                        append(getShortDescription(startCalcMethod))
+                        append(")")
+                    }
+                    append("-")
+                    append(endZman.friendlyNameEnglish)
+                    if(endCalcMethod != null && endCalcMethod != ZmanCalculationMethod.Unspecified) {
+                        append("(")
+                        append(getShortDescription(endCalcMethod))
+                        append(")")
+                    }
+                } else {
+                    append("Day starts at ")
+                    append(startZman.friendlyNameEnglish)
+                    append(" and ends at ")
+                    append(endZman.friendlyNameEnglish)
+                    append(", where ${startZman.friendlyNameEnglish} is defined to start when ${getShortDescription(startCalcMethod)} and ends at ${getShortDescription(endCalcMethod)}")
                 }
-                append("-")
-                append(endZman.friendlyNameEnglish)
-                val endCalcMethod = definitionOfDayUsed.dayEnd.zmanToCalcMethodUsed.values.firstOrNull()
-                if(endCalcMethod != null && endCalcMethod != ZmanCalculationMethod.Unspecified) {
-                    append("(")
-                    append(endCalcMethod.valueToString())
-                    append(")")
-                }
-                append(" - ")
             }
-            append(rules.mainCalculationMethodUsed?.valueToString())
+            append(mainCalculationMethod)
             if(includeElevationDescription) {
                 append(" - ")
                 append(
@@ -90,6 +103,9 @@ class ZmanDescriptionFormatter {
             }
         }
     }
+
+    private fun getShortDescription(startCalcMethod: ZmanCalculationMethod<*>?) =
+        if (startCalcMethod is ZmanCalculationMethod.Degrees) startCalcMethod.format() else startCalcMethod?.valueToString()
 
     fun formatLongDescription(zman: Zman): String {
         val result = StringBuilder()

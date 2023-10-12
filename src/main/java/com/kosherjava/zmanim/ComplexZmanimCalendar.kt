@@ -295,7 +295,7 @@ class ComplexZmanimCalendar(location: GeoLocation = GeoLocation()) : ZmanimCalen
             ZmanType.SHAA_ZMANIS,
             getTemporalHour(alos60.momentOfOccurrence, tzais60.momentOfOccurrence).milliseconds,
             ZmanDefinition(
-                ZmanCalculationMethod.FixedDuration._60,
+                ZmanCalculationMethod.FixedDuration._60_SUNRISE,
                 null,
                 ZmanDefinition.UsesElevation.ALWAYS,
                 ZmanDefinition.DayDefinition.DAWN_TO_DUSK
@@ -723,7 +723,7 @@ class ComplexZmanimCalendar(location: GeoLocation = GeoLocation()) : ZmanimCalen
                 -60 * MINUTE_MILLIS
             ),
             ZmanDefinition(
-                ZmanCalculationMethod.FixedDuration._60,
+                ZmanCalculationMethod.FixedDuration.`-60_SUNRISE`,
                 null,
                 ZmanDefinition.UsesElevation.ALWAYS,
             ),
@@ -752,7 +752,7 @@ class ComplexZmanimCalendar(location: GeoLocation = GeoLocation()) : ZmanimCalen
             ZmanType.ALOS,
             getZmanisBasedOffset(-1.2),
             ZmanDefinition(
-                ZmanCalculationMethod.ZmaniyosDuration._72,
+                ZmanCalculationMethod.ZmaniyosDuration((-72).minutes, ZmanType.HANAITZ),
                 null,
                 ZmanDefinition.UsesElevation.IF_SET,
             ),
@@ -780,7 +780,7 @@ class ComplexZmanimCalendar(location: GeoLocation = GeoLocation()) : ZmanimCalen
             ZmanType.ALOS,
             getTimeOffset(elevationAdjustedSunrise, -96 * MINUTE_MILLIS),
             ZmanDefinition(
-                ZmanCalculationMethod.FixedDuration._96,
+                ZmanCalculationMethod.FixedDuration((-96).minutes, ZmanType.HANAITZ),
                 null,
                 ZmanDefinition.UsesElevation.IF_SET
             )
@@ -806,7 +806,7 @@ class ComplexZmanimCalendar(location: GeoLocation = GeoLocation()) : ZmanimCalen
             ZmanType.ALOS,
             getZmanisBasedOffset(-1.5),
             ZmanDefinition(
-                ZmanCalculationMethod.ZmaniyosDuration._90,
+                ZmanCalculationMethod.ZmaniyosDuration((-90).minutes, ZmanType.HANAITZ),
                 null,
                 ZmanDefinition.UsesElevation.IF_SET
             )
@@ -831,7 +831,7 @@ class ComplexZmanimCalendar(location: GeoLocation = GeoLocation()) : ZmanimCalen
             ZmanType.ALOS,
             getZmanisBasedOffset(-1.6),
             ZmanDefinition(
-                ZmanCalculationMethod.ZmaniyosDuration._96,
+                ZmanCalculationMethod.ZmaniyosDuration((-96).minutes, ZmanType.HANAITZ),
                 null,
                 ZmanDefinition.UsesElevation.IF_SET
             )
@@ -854,7 +854,7 @@ class ComplexZmanimCalendar(location: GeoLocation = GeoLocation()) : ZmanimCalen
             ZmanType.ALOS,
             getTimeOffset(elevationAdjustedSunrise, -90 * MINUTE_MILLIS),
             ZmanDefinition(
-                ZmanCalculationMethod.FixedDuration._90,
+                ZmanCalculationMethod.FixedDuration((-90).minutes, ZmanType.HANAITZ),
                 null,
                 ZmanDefinition.UsesElevation.IF_SET
             )
@@ -886,7 +886,7 @@ class ComplexZmanimCalendar(location: GeoLocation = GeoLocation()) : ZmanimCalen
             ZmanType.ALOS,
             getTimeOffset(elevationAdjustedSunrise, -120 * MINUTE_MILLIS),
             ZmanDefinition(
-                ZmanCalculationMethod.FixedDuration._120,
+                ZmanCalculationMethod.FixedDuration((-120).minutes, ZmanType.HANAITZ),
                 null,
                 ZmanDefinition.UsesElevation.IF_SET
             )
@@ -914,7 +914,7 @@ class ComplexZmanimCalendar(location: GeoLocation = GeoLocation()) : ZmanimCalen
             ZmanType.ALOS,
             getZmanisBasedOffset(-2.0),
             ZmanDefinition(
-                ZmanCalculationMethod.ZmaniyosDuration._120,
+                ZmanCalculationMethod.ZmaniyosDuration((-120).minutes, ZmanType.HANAITZ),
                 null,
                 ZmanDefinition.UsesElevation.IF_SET
             )

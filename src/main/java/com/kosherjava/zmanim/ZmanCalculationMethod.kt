@@ -84,12 +84,15 @@ sealed class ZmanCalculationMethod<T>(val value: T) {
              * */
             val _30 = FixedDuration(30.minutes)
             val _60 = FixedDuration(60.minutes)
-
+            val _60_SUNRISE = FixedDuration(60.minutes, ZmanType.HANAITZ)
+            val `-60_SUNRISE` = FixedDuration((-60).minutes, ZmanType.HANAITZ)
             /**
              * A mil takes 18 minutes to walk; 4 mil * 18 minutes/mil = 72 minutes
              * @see ZmanAuthority.RAAVAN (disputed - see [ComplexZmanimCalendar.alos60])
              * */
             val _72 = FixedDuration(72.minutes)
+            val _72_SUNRISE = FixedDuration(72.minutes, ZmanType.HANAITZ)
+            val `-72_SUNRISE` = FixedDuration((-72).minutes, ZmanType.HANAITZ)
 
             /**
              * A mil takes 22.5 minutes to walk; 4 mil * 22.5 minutes/mil = 90 minutes
@@ -111,9 +114,14 @@ sealed class ZmanCalculationMethod<T>(val value: T) {
 
         override fun format(subjectZman:String, zmanRelativeTo: String) = "$subjectZman is ${valueToString()} ${if (duration.isNegative()) "before" else "after"} $zmanRelativeTo"
 
-        override fun valueToString(): String = duration.durationValueToString()
+        override fun valueToString(): String = duration.relativeDurationToString(fromZman)
     }
 
+    internal fun Duration.relativeDurationToString(fromZman: ZmanType? = null, zmaniyos: Boolean = false) = if (fromZman != null)
+        "${absoluteValue.durationValueToString(zmaniyos)} ${
+            if (isNegative()) "before" else "after"
+        } ${fromZman.friendlyNameEnglish}"
+    else durationValueToString(zmaniyos)
     internal fun Duration.durationValueToString(halachic: Boolean = false) = toComponents { hours, minutes, seconds, nanoseconds ->
         buildString {
             val totalMinutes = inWholeMinutes
@@ -163,7 +171,7 @@ sealed class ZmanCalculationMethod<T>(val value: T) {
             append("minutes before sunrise / after sunset")
         }
 
-        override fun valueToString(): String = duration.durationValueToString(true)
+        override fun valueToString(): String = duration.relativeDurationToString(fromZman, true)
     }
 
     /**
@@ -255,8 +263,8 @@ sealed class ZmanCalculationMethod<T>(val value: T) {
             val _26 = Degrees(26F)
         }
 
-        override fun format(): String = "Day is ${degrees}˚ below sunrise / sunset"
-        override fun format(subjectZman: String, zmanRelativeTo: String): String = "$subjectZman is $degrees˚ ${if (degrees < 0) "before" else "after"} $zmanRelativeTo"
+        override fun format(): String = "Sun dips $degrees˚ below eastern/western geometric horizon"
+        override fun format(subjectZman: String, zmanRelativeTo: String): String = "$subjectZman is when the sun is $degrees˚ ${if (degrees < 0) "before" else "after"} $zmanRelativeTo"
         override fun valueToString(): String = "$degrees˚"
     }
 }
